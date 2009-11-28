@@ -9,12 +9,16 @@ data = Subway::Parser.parse(subs)
 start_time = Time.now
 range, text    = data.shift
 
-loop do
-  secs = Time.now - start_time
 
-  if range.include?(secs)
+loop do
+  if range.include?(Time.now - start_time)
     system "clear"
     puts text
+    while range.include?(Time.now - start_time)
+      :do_nothing
+    end
     range, text = data.shift
+  else
+    system "clear"
   end
 end
